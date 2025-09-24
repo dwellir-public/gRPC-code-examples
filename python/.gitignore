@@ -1,0 +1,25 @@
+# Environment variables
+.env
+
+# Generated protobuf files
+*_pb2.py
+*_pb2_grpc.py
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
