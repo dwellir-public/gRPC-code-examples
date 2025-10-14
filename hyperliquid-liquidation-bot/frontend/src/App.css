@@ -1,0 +1,237 @@
+.app {
+  min-height: 100vh;
+  position: relative;
+  padding: 2rem;
+}
+
+/* Animated gradient orbs */
+.gradient-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.gradient-orb-1 {
+  width: 500px;
+  height: 500px;
+  background: linear-gradient(45deg, #6366f1, #8b5cf6);
+  top: -250px;
+  right: -250px;
+  animation: float 20s ease-in-out infinite;
+}
+
+.gradient-orb-2 {
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(45deg, #ef4444, #f59e0b);
+  bottom: -200px;
+  left: -200px;
+  animation: float 25s ease-in-out infinite reverse;
+}
+
+.gradient-orb-3 {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(45deg, #10b981, #3b82f6);
+  top: 50%;
+  left: 50%;
+  animation: float 30s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(30px, -30px);
+  }
+  66% {
+    transform: translate(-20px, 20px);
+  }
+}
+
+/* Header */
+.header {
+  position: relative;
+  z-index: 10;
+  margin-bottom: 2rem;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header-left {
+  flex: 1;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.logo-icon {
+  color: var(--accent-primary);
+  filter: drop-shadow(0 0 10px var(--glow-primary));
+}
+
+.logo h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-left: 3rem;
+}
+
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text-secondary);
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-indicator.connected {
+  background: var(--accent-success);
+  box-shadow: 0 0 10px var(--accent-success);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.status-indicator.disconnected {
+  background: var(--text-muted);
+}
+
+.status-text.connected {
+  color: var(--accent-success);
+  font-weight: 600;
+}
+
+.status-text.disconnected {
+  color: var(--text-muted);
+}
+
+/* Main Content */
+.main-content {
+  position: relative;
+  z-index: 10;
+  margin-top: 2rem;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.content-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+}
+
+.liquidation-count {
+  padding: 0.5rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* Alert */
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--accent-primary);
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  color: var(--accent-primary);
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  margin-top: 2rem;
+}
+
+.empty-icon {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* Liquidations Grid */
+.liquidations-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app {
+    padding: 1rem;
+  }
+
+  .logo h1 {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    margin-left: 2.5rem;
+  }
+
+  .liquidations-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .content-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}

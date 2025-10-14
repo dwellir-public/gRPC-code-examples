@@ -7,6 +7,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 import hyperliquid_pb2
 import hyperliquid_pb2_grpc
+from pprint import pprint as pp
 
 # Load environment variables
 load_dotenv()
@@ -14,9 +15,16 @@ load_dotenv()
 
 def stream_blocks():
     endpoint = os.getenv('HYPERLIQUID_ENDPOINT')
+    api_key = os.getenv('API_KEY')
+
     if not endpoint:
         print("Error: HYPERLIQUID_ENDPOINT environment variable is required.")
         print("Please create a .env file from .env.example and set your endpoint.")
+        sys.exit(1)
+
+    if not api_key:
+        print("Error: API_KEY environment variable is required.")
+        print("Please set your API key in the .env file.")
         sys.exit(1)
 
     print('🚀 Hyperliquid Python gRPC Client - Stream Blocks')
@@ -30,6 +38,9 @@ def stream_blocks():
     options = [
         ('grpc.max_receive_message_length', 150 * 1024 * 1024),  # 150MB max
     ]
+
+    # Prepare metadata with API key
+    metadata = [('x-api-key', api_key)]
 
     print('🔌 Connecting to gRPC server...')
     with grpc.secure_channel(endpoint, credentials, options=options) as channel:
@@ -54,8 +65,8 @@ def stream_blocks():
         signal.signal(signal.SIGINT, signal_handler)
 
         try:
-            # Start streaming blocks
-            for response in client.StreamBlocks(request):
+            # Start streaming blocks with metadata
+            for response in client.StreamBlocks(request, metadata=metadata):
                 block_count += 1
                 print(f'\n===== BLOCK #{block_count} =====')
                 print(f'📦 Response size: {len(response.data)} bytes')
@@ -81,61 +92,82 @@ def process_block(data, block_num):
         print(f'🧱 BLOCK #{block_num} DETAILS')
         print('===================')
 
-        # Display block height
-        if 'height' in block:
-            print(f'📏 Height: {block["height"]}')
 
-        # Display timestamp
-        if 'time' in block:
-            timestamp = block['time']
-            if isinstance(timestamp, (int, float)):
-                # Convert from milliseconds to seconds if needed
-                if timestamp > 10**10:  # Likely milliseconds
-                    timestamp = timestamp / 1000
-                dt = datetime.fromtimestamp(timestamp)
-                print(f'⏰ Time: {dt.strftime("%Y-%m-%d %H:%M:%S UTC")}')
+        # Count action types (counting individual orders within each action)
+        action_type_counts = {}
 
-        # Display hash if available
-        if 'hash' in block:
-            print(f'🔗 Hash: {block["hash"]}')
+        if 'abci_block' in block:
+            abci_block = block['abci_block']
+            if 'proposer' in abci_block:
+                print(f'👤 Proposer: {abci_block["proposer"]}')
+            if 'signed_action_bundles' in abci_block:
+                if isinstance(abci_block['signed_action_bundles'], list):
+                    for action_bundle in abci_block['signed_action_bundles']:
+                        # Each action_bundle is [hash, data_object]
+                        if isinstance(action_bundle, list) and len(action_bundle) > 1:
+                            bundle_data = action_bundle[1]
+                            if 'signed_actions' in bundle_data:
+                                if isinstance(bundle_data['signed_actions'], list):
+                                    for signed_action in bundle_data['signed_actions']:
+                                        if 'action' in signed_action:
+                                            action = signed_action['action']
+                                            if isinstance(action, dict) and 'type' in action:
+                                                action_type = action['type']
+                                                # For order type, count the number of orders
+                                                if action_type == 'order' and 'orders' in action:
+                                                    if isinstance(action['orders'], list):
+                                                        count = len(action['orders'])
+                                                        action_type_counts[action_type] = action_type_counts.get(action_type, 0) + count
+                                                    else:
+                                                        action_type_counts[action_type] = action_type_counts.get(action_type, 0) + 1
+                                                else:
+                                                    # For other action types, count as 1
+                                                    action_type_counts[action_type] = action_type_counts.get(action_type, 0) + 1
 
-        # Display number of transactions
-        if 'txs' in block and isinstance(block['txs'], list):
-            txs = block['txs']
-            print(f'📋 Transactions: {len(txs)}')
+        total_actions = sum(action_type_counts.values())
+        print(f'📋 Action types:')
+        for action_type, count in action_type_counts.items():
+            print(f'  • {action_type}: {count}')
+        print(f'  Total actions: {total_actions}')
 
-            # Show first few transaction details
-            max_txs = min(3, len(txs))
+        # Count order statuses (success vs error) from resps.Full section
+        success_count = 0
+        error_count = 0
 
-            for i in range(max_txs):
-                tx = txs[i]
-                tx_info = f'  • TX {i + 1}: '
+        if 'resps' in block:
+            resps = block['resps']
+            if isinstance(resps, dict) and 'Full' in resps:
+                full_data = resps['Full']
+                if isinstance(full_data, list):
+                    for item in full_data:
+                        # Each item is [hash, [entries...]]
+                        if isinstance(item, list) and len(item) > 1:
+                            entries = item[1]  # Skip the hash, get the second part
+                            if isinstance(entries, list):
+                                for entry in entries:
+                                    if isinstance(entry, dict) and 'res' in entry:
+                                        res = entry['res']
+                                        if isinstance(res, dict) and 'response' in res:
+                                            response = res['response']
+                                            if isinstance(response, dict) and response.get('type') == 'order':
+                                                if 'data' in response and 'statuses' in response['data']:
+                                                    statuses = response['data']['statuses']
+                                                    if isinstance(statuses, list):
+                                                        for status in statuses:
+                                                            if isinstance(status, dict):
+                                                                if 'error' in status:
+                                                                    error_count += 1
+                                                                else:
+                                                                    # Success status (resting, filled, etc.)
+                                                                    success_count += 1
 
-                if isinstance(tx, dict):
-                    if 'type' in tx:
-                        tx_info += f'Type: {tx["type"]}'
-                    if 'hash' in tx:
-                        tx_info += f', Hash: {tx["hash"][:12]}...'
-                else:
-                    tx_info += str(tx)
+        total_statuses = success_count + error_count
+        print(f'\n📊 Order Statuses:')
+        print(f'  ✅ Success: {success_count}')
+        print(f'  ❌ Error: {error_count}')
+        print(f'  Total statuses: {total_statuses}')
 
-                print(tx_info)
-
-            if len(txs) > max_txs:
-                print(f'  ... and {len(txs) - max_txs} more transactions')
-
-        # Display any other interesting fields
-        print('\n📊 Block Summary:')
-        for key, value in block.items():
-            if key in ['height', 'time', 'hash', 'txs']:
-                # Already displayed above
-                continue
-
-            # Display other fields
-            if isinstance(value, (dict, list)):
-                print(f'• {key}: {json.dumps(value, separators=(",", ":"))[:100]}...')
-            else:
-                print(f'• {key}: {value}')
+        print(f'\n🔍 Match check: Actions={total_actions}, Statuses={total_statuses}, Match={total_actions == total_statuses}')
 
     except json.JSONDecodeError as e:
         print(f'❌ Failed to parse JSON: {e}')

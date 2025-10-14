@@ -14,9 +14,16 @@ load_dotenv()
 
 def stream_block_fills():
     endpoint = os.getenv('HYPERLIQUID_ENDPOINT')
+    api_key = os.getenv('API_KEY')
+
     if not endpoint:
         print("Error: HYPERLIQUID_ENDPOINT environment variable is required.")
         print("Please create a .env file from .env.example and set your endpoint.")
+        sys.exit(1)
+
+    if not api_key:
+        print("Error: API_KEY environment variable is required.")
+        print("Please set your API key in the .env file.")
         sys.exit(1)
 
     print('🚀 Hyperliquid Python gRPC Client - Stream Block Fills')
@@ -30,6 +37,9 @@ def stream_block_fills():
     options = [
         ('grpc.max_receive_message_length', 150 * 1024 * 1024),  # 150MB max
     ]
+
+    # Prepare metadata with API key
+    metadata = [('x-api-key', api_key)]
 
     print('🔌 Connecting to gRPC server...')
     with grpc.secure_channel(endpoint, credentials, options=options) as channel:
@@ -54,8 +64,8 @@ def stream_block_fills():
         signal.signal(signal.SIGINT, signal_handler)
 
         try:
-            # Start streaming block fills
-            for response in client.StreamBlockFills(request):
+            # Start streaming block fills with metadata
+            for response in client.StreamBlockFills(request, metadata=metadata):
                 block_fills_count += 1
                 print(f'\n===== BLOCK FILLS #{block_fills_count} =====')
                 print(f'📦 Response size: {len(response.data)} bytes')
@@ -128,16 +138,22 @@ def process_block_fills(data, block_fills_num):
 
         # Display any other interesting fields
         print('\n📊 Block Fills Summary:')
-        for key, value in block_fills.items():
-            if key in ['height', 'time', 'fills']:
-                # Already displayed above
-                continue
+        if isinstance(block_fills, dict):
+            for key, value in block_fills.items():
+                if key in ['height', 'time', 'fills']:
+                    # Already displayed above
+                    continue
 
-            # Display other fields
-            if isinstance(value, (dict, list)):
-                print(f'• {key}: {json.dumps(value, separators=(",", ":"))[:100]}...')
-            else:
-                print(f'• {key}: {value}')
+                # Display other fields
+                if isinstance(value, (dict, list)):
+                    print(f'• {key}: {json.dumps(value, separators=(",", ":"))[:100]}...')
+                else:
+                    print(f'• {key}: {value}')
+        elif isinstance(block_fills, list):
+            print(f'• Block fills is a list with {len(block_fills)} items')
+            # Display first few items if it's a simple list
+            if len(block_fills) > 0:
+                print(f'• First item type: {type(block_fills[0]).__name__}')
 
     except json.JSONDecodeError as e:
         print(f'❌ Failed to parse JSON: {e}')

@@ -1,0 +1,201 @@
+.liquidation-table-container {
+  width: 100%;
+  overflow-x: auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+.liquidation-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.liquidation-table thead {
+  background: rgba(99, 102, 241, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.liquidation-table th {
+  padding: 1rem;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+
+.liquidation-table tbody tr {
+  transition: all 0.2s ease;
+  border-bottom: 1px solid var(--border);
+}
+
+.liquidation-table tbody tr:hover {
+  background: var(--bg-card-hover);
+  transform: scale(1.01);
+}
+
+.liquidation-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.liquidation-table td {
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* Specific cell styles */
+.time-cell {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.address-cell {
+  font-family: 'Courier New', monospace;
+}
+
+.address-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.address {
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.coin-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 6px;
+  color: var(--accent-danger);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.direction-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.direction-badge.long {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--accent-success);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.direction-badge.short {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--accent-danger);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.size-cell,
+.price-cell,
+.fee-cell {
+  font-family: 'Courier New', monospace;
+  font-weight: 500;
+}
+
+.pnl-cell {
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.pnl-cell.profit {
+  color: var(--accent-success);
+}
+
+.pnl-cell.loss {
+  color: var(--accent-danger);
+}
+
+.actions-cell {
+  text-align: center;
+}
+
+.icon-button {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.icon-button:hover {
+  background: rgba(99, 102, 241, 0.1);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  transform: scale(1.1);
+}
+
+.icon-button:active {
+  transform: scale(0.95);
+}
+
+.copy-btn:hover {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: var(--accent-success);
+  color: var(--accent-success);
+}
+
+.view-btn:hover {
+  background: rgba(99, 102, 241, 0.1);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .liquidation-table {
+    font-size: 0.85rem;
+  }
+
+  .liquidation-table th,
+  .liquidation-table td {
+    padding: 0.75rem 0.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .liquidation-table-container {
+    padding: 0.5rem;
+  }
+
+  .liquidation-table th,
+  .liquidation-table td {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.75rem;
+  }
+
+  .coin-badge,
+  .direction-badge {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+  }
+}
