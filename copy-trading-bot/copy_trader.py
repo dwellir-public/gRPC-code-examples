@@ -71,6 +71,7 @@ class CopyTradingBot:
 
         # === Configuration ===
         self.endpoint = os.getenv('HYPERLIQUID_ENDPOINT')
+        self.api_key = os.getenv('HYPERLIQUID_API_KEY', '')
         self.target_wallet = os.getenv('TARGET_WALLET_ADDRESS', '').strip().lower()
         self.copy_percentage = float(os.getenv('COPY_PERCENTAGE', '5.0'))
         self.dry_run = os.getenv('DRY_RUN', 'true').lower() == 'true'
@@ -592,11 +593,17 @@ class CopyTradingBot:
         # Connect and stream
         with grpc.secure_channel(endpoint, credentials, options=options) as channel:
             client = hyperliquid_pb2_grpc.HyperLiquidL1GatewayStub(channel)
+
+            # Prepare metadata with API key if provided
+            metadata = []
+            if self.api_key:
+                metadata.append(('x-api-key', self.api_key))
+
             request = hyperliquid_pb2.Timestamp(timestamp=0)  # Start from latest
 
             try:
                 # Stream block fills (infinite loop until error or Ctrl+C)
-                for response in client.StreamBlockFills(request):
+                for response in client.StreamBlockFills(request, metadata=metadata):
                     try:
                         block_data = json.loads(response.data.decode('utf-8'))
                     except json.JSONDecodeError as e:
@@ -604,15 +611,27 @@ class CopyTradingBot:
                         continue
 
                     # Process each trade in this block
-                    events = block_data.get('events', [])
-                    for event in events:
-                        if not isinstance(event, list) or len(event) < 2:
+                    try:
+                        # Handle case where block_data is a dict with 'events' key
+                        if isinstance(block_data, dict):
+                            events = block_data.get('events', [])
+                        # Handle case where block_data is a list (first block or direct events)
+                        elif isinstance(block_data, list):
+                            events = block_data
+                        else:
                             continue
 
-                        wallet_address = event[0]
-                        fill_data = event[1]
+                        for event in events:
+                            if not isinstance(event, list) or len(event) < 2:
+                                continue
 
-                        self.process_fill(wallet_address, fill_data)
+                            wallet_address = event[0]
+                            fill_data = event[1]
+
+                            self.process_fill(wallet_address, fill_data)
+                    except Exception:
+                        # Skip malformed blocks silently
+                        continue
 
             except grpc.RpcError as e:
                 print(f"\n❌ gRPC error: {e.code()} - {e.details()}")
