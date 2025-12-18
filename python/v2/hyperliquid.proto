@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package hyperliquid_l1_gateway.v2;
+
+service HyperliquidL1Gateway {
+  // Start a blocks stream from the given Position
+  rpc StreamBlocks(Position) returns (stream Block) {}
+
+  // Start a fills stream from the given Position
+  rpc StreamFills(Position) returns (stream BlockFills) {}
+
+  // Start an order book snapshots stream from the given Position
+  rpc StreamOrderbookSnapshots(Position)
+      returns (stream OrderBookSnapshot) {}
+
+  // Return a single block at the requested Position
+  rpc GetBlock(Position) returns (Block) {}
+
+  // Return fills at the requested Position
+  rpc GetFills(Position) returns (BlockFills) {}
+
+  // Return an order book snapshot at the requested Timestamp
+  rpc GetOrderBookSnapshot(Timestamp) returns (OrderBookSnapshot) {}
+}
+
+message Position {
+  // Leave all fields unset or zero to target the latest data.
+  oneof position {
+    int64 timestamp_ms = 1; // ms since Unix epoch, inclusive
+    int64 block_height = 2; // block height, inclusive
+  }
+}
+
+message Timestamp {
+  int64 timestamp_ms = 1;
+}
+
+message Block {
+  // JSON-encoded Hyperliquid block from "replica_cmds".
+  bytes data = 1;
+}
+
+message OrderBookSnapshot {
+  // JSON-encoded Hyperliquid order book snapshot.
+  bytes data = 1;
+}
+
+message BlockFills {
+  // JSON-encoded object from "node_fills" or "node_fills_by_block".
+  bytes data = 1;
+}

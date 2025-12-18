@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package hyperliquid_l1_gateway.v1;
+
+option go_package = "internal/api";
+
+// Request message with timestamp (milliseconds since Unix epoch, or 0 for latest)
+message Timestamp {
+  int64 timestamp = 1;
+}
+
+// Block data response
+message Block {
+  bytes data = 1;
+}
+
+// OrderBook snapshot response
+message OrderBookSnapshot {
+  bytes data = 1;
+}
+
+// Block fills response
+message BlockFills {
+  bytes data = 1;
+}
+
+// Hyperliquid L1 Gateway Service (v1)
+service HyperLiquidL1Gateway {
+  // Get single OrderBookSnapshot at timestamp
+  rpc GetOrderBookSnapshot(Timestamp) returns (OrderBookSnapshot) {}
+
+  // Stream Blocks starting from timestamp
+  rpc StreamBlocks(Timestamp) returns (stream Block) {}
+
+  // Stream OrderBookSnapshots starting from timestamp
+  rpc StreamOrderBookSnapshots(Timestamp) returns (stream OrderBookSnapshot) {}
+
+  // Stream BlockFills starting from timestamp
+  rpc StreamBlockFills(Timestamp) returns (stream BlockFills) {}
+}
