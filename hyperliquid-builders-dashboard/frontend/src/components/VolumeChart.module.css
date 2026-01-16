@@ -1,0 +1,155 @@
+.container {
+  background: rgb(var(--cardBackground));
+  border: 1px solid rgba(var(--borderColor), 1);
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2.4rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: var(--font-weight-semibold);
+  color: rgb(var(--text));
+  margin: 0;
+}
+
+.total {
+  font-size: var(--font-size-caption);
+  color: rgba(var(--text), 0.6);
+  font-family: var(--code-font-family);
+}
+
+.chart {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 12rem 1fr 12rem;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.labelContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.logo {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 4px;
+  object-fit: contain;
+}
+
+.label {
+  font-size: 1.4rem;
+  font-weight: var(--font-weight-semibold);
+  color: rgb(var(--text));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.barContainer {
+  height: 2.4rem;
+  background: rgba(var(--borderColor), 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+  min-width: 2px;
+}
+
+.values {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+}
+
+.volume {
+  font-family: var(--code-font-family);
+  font-size: 1.4rem;
+  font-weight: var(--font-weight-semibold);
+  color: rgb(var(--text));
+}
+
+.percent {
+  font-family: var(--code-font-family);
+  font-size: 1.2rem;
+  color: rgba(var(--text), 0.5);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+  margin-top: 2rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid rgba(var(--borderColor), 0.5);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.legendColor {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 3px;
+}
+
+.legendLabel {
+  font-size: 1.2rem;
+  color: rgba(var(--text), 0.7);
+}
+
+.empty {
+  text-align: center;
+  padding: 4rem;
+  color: rgba(var(--text), 0.5);
+  font-size: var(--font-size-caption);
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin: 1.6rem;
+    padding: 1.6rem;
+  }
+
+  .row {
+    grid-template-columns: 8rem 1fr 8rem;
+    gap: 1rem;
+  }
+
+  .label {
+    font-size: 1.2rem;
+  }
+
+  .volume {
+    font-size: 1.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar {
+    transition: none;
+  }
+}

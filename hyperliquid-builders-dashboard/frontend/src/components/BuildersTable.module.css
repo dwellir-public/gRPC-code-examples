@@ -1,0 +1,156 @@
+.tableWrapper {
+  overflow-x: auto;
+  margin: 2.4rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgb(var(--tableBackground));
+  border: 1px solid rgba(var(--tableBorder), 1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table th,
+.table td {
+  padding: 1.4rem 1.6rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(var(--tableBorder), 1);
+}
+
+.table th {
+  background: rgb(var(--secondBackground));
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-caption);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(var(--text), 0.7);
+  white-space: nowrap;
+}
+
+.table tbody tr:nth-child(even) {
+  background: rgb(var(--tableStripe));
+}
+
+.table tbody tr:hover {
+  background: rgba(var(--primary), 0.05);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+}
+
+.sortable:hover {
+  color: rgb(var(--primary));
+}
+
+.sortIcon {
+  margin-left: 0.6rem;
+  font-size: 1rem;
+  opacity: 0.3;
+  transition: opacity 0.2s;
+}
+
+.sortIcon.active {
+  opacity: 1;
+  color: rgb(var(--primary));
+}
+
+.rank {
+  width: 5rem;
+  text-align: center;
+  color: rgba(var(--text), 0.5);
+}
+
+.numeric {
+  text-align: right;
+  font-family: var(--code-font-family);
+  font-size: 1.4rem;
+}
+
+.builderCell {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.colorDot {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.builderLogo {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 6px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.builderInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.builderName {
+  font-weight: var(--font-weight-semibold);
+  color: rgb(var(--text));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.builderAddress {
+  font-family: var(--code-font-family);
+  font-size: 1.2rem;
+  color: rgba(var(--text), 0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fees {
+  color: rgb(var(--successColor));
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem;
+  text-align: center;
+  color: rgba(var(--text), 0.6);
+}
+
+.emptyHint {
+  margin-top: 0.8rem;
+  font-size: var(--font-size-caption);
+  color: rgba(var(--text), 0.4);
+}
+
+@media (max-width: 768px) {
+  .tableWrapper {
+    margin: 1.6rem;
+  }
+
+  .table th,
+  .table td {
+    padding: 1rem 1.2rem;
+  }
+
+  .builderAddress {
+    display: none;
+  }
+}

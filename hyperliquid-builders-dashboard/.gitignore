@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+*.pyc
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Generated gRPC files
+*_pb2.py
+*_pb2_grpc.py
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

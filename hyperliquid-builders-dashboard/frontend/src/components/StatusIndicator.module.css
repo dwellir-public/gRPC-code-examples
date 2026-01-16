@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.indicator {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+}
+
+.connected {
+  background: rgb(var(--successColor));
+  box-shadow: 0 0 8px rgba(var(--successColor), 0.5);
+  animation: pulse 2s infinite;
+}
+
+.disconnected {
+  background: rgb(var(--warningColor));
+}
+
+.text {
+  font-size: var(--font-size-caption);
+  color: rgba(var(--text), 0.8);
+  font-family: var(--code-font-family);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .connected {
+    animation: none;
+  }
+}

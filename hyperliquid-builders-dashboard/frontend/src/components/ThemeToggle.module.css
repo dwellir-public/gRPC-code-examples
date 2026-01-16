@@ -1,0 +1,22 @@
+.toggle {
+  background: transparent;
+  border: 1px solid rgba(var(--borderColor), 1);
+  border-radius: 8px;
+  padding: 0.8rem;
+  cursor: pointer;
+  color: rgb(var(--text));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.toggle:hover {
+  background: rgba(var(--primary), 0.1);
+  border-color: rgb(var(--primary));
+}
+
+.toggle:focus-visible {
+  outline: 2px solid rgb(var(--primary));
+  outline-offset: 2px;
+}

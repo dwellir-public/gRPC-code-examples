@@ -8,7 +8,7 @@ __pycache__/
 *$py.class
 venv/
 env/
-.env
+**/.env
 
 # Generated protobuf files
 *_pb2.py

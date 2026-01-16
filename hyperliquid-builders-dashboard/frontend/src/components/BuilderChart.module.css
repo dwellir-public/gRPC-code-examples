@@ -1,0 +1,235 @@
+.container {
+  background: rgb(var(--cardBackground));
+  border: 1px solid rgba(var(--borderColor), 1);
+  border-radius: 12px;
+  padding: 2.4rem;
+  margin: 0 2.4rem 2.4rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.4rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: var(--font-weight-semibold);
+  color: rgb(var(--text));
+  margin: 0;
+}
+
+.total {
+  font-size: 1.4rem;
+  color: rgba(var(--text), 0.6);
+  font-family: var(--code-font-family);
+}
+
+.chart {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 4rem 16rem 1fr 14rem;
+  align-items: center;
+  gap: 1.6rem;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid rgba(var(--borderColor), 0.2);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.rankBadge {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 8px;
+  background: rgba(var(--borderColor), 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: var(--font-weight-bold);
+  color: rgba(var(--text), 0.7);
+}
+
+.rankOther {
+  color: rgba(var(--text), 0.4);
+}
+
+.builderInfo {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.logo {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(var(--borderColor), 0.5);
+  background: rgb(var(--cardBackground));
+}
+
+.logoPlaceholder {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: var(--font-weight-bold);
+  color: white;
+  border: 2px solid rgba(var(--borderColor), 0.3);
+}
+
+.name {
+  font-size: 1.6rem;
+  font-weight: var(--font-weight-semibold);
+  color: rgb(var(--text));
+}
+
+.barSection {
+  width: 100%;
+}
+
+.barBackground {
+  height: 2.4rem;
+  background: rgba(var(--borderColor), 0.2);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.4s ease;
+  min-width: 4px;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+}
+
+.volume {
+  font-family: var(--code-font-family);
+  font-size: 1.6rem;
+  font-weight: var(--font-weight-bold);
+  color: rgb(var(--text));
+}
+
+.percent {
+  font-family: var(--code-font-family);
+  font-size: 1.2rem;
+  color: rgba(var(--text), 0.5);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+  margin-top: 2.4rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(var(--borderColor), 0.3);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.legendColor {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 3px;
+}
+
+.legendLabel {
+  font-size: 1.3rem;
+  color: rgba(var(--text), 0.7);
+}
+
+.legendMore {
+  font-size: 1.3rem;
+  color: rgba(var(--text), 0.5);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem;
+  text-align: center;
+  color: rgba(var(--text), 0.5);
+}
+
+.emptyIcon {
+  margin-bottom: 1.6rem;
+  opacity: 0.3;
+}
+
+.emptyHint {
+  margin-top: 0.8rem;
+  font-size: var(--font-size-caption);
+  color: rgba(var(--text), 0.4);
+}
+
+@media (max-width: 900px) {
+  .container {
+    margin: 0 1.6rem 1.6rem;
+    padding: 1.6rem;
+  }
+
+  .row {
+    grid-template-columns: 3rem 10rem 1fr 10rem;
+    gap: 1rem;
+  }
+
+  .name {
+    font-size: 1.4rem;
+  }
+
+  .volume {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .row {
+    grid-template-columns: 3rem 1fr 8rem;
+    gap: 0.8rem;
+  }
+
+  .barSection {
+    display: none;
+  }
+
+  .builderInfo {
+    gap: 0.8rem;
+  }
+
+  .logo,
+  .logoPlaceholder {
+    width: 2.4rem;
+    height: 2.4rem;
+    font-size: 1.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar {
+    transition: none;
+  }
+}

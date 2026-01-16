@@ -1,0 +1,104 @@
+{
+  "builders": {
+    "0x1924b8561eef20e70ede628a296175d358be80e5": {
+      "name": "Based",
+      "color": "#ff693c",
+      "logo": "/logos/basedapp.png"
+    },
+    "0xb84168cf3be63c6b8dad05ff5d755e97432ff80b": {
+      "name": "Phantom",
+      "color": "#AB9FF2",
+      "logo": "/logos/phantom.jpg"
+    },
+    "0x2868fc0d9786a740b491577a43502259efa78a39": {
+      "name": "Insilico",
+      "color": "#10B981",
+      "logo": "/logos/insilico.jpg"
+    },
+    "0x1cc34f6af34653c515b47a83e1de70ba9b0cda1f": {
+      "name": "Axiom",
+      "color": "#c29462",
+      "logo": "/logos/axiom.jpg"
+    },
+    "0xcf56dd84ed85eb4929e0a76a0f2f04049b4ffc1a": {
+      "name": "Infinex",
+      "color": "#EC4899",
+      "logo": "/logos/infinex.jpg"
+    },
+    "0xe95a5e31904e005066614247d309e00d8ad753aa": {
+      "name": "MetaMask",
+      "color": "#F6851B",
+      "logo": "/logos/metamask.jpg"
+    },
+    "0x1922810825c90f4270048b96da7b1803cd8609ef": {
+      "name": "Defiapp",
+      "color": "#8B5CF6",
+      "logo": "/logos/defiapp.jpg"
+    },
+    "0x7975cafdff839ed5047244ed3a0dd82a89866081": {
+      "name": "Dexari",
+      "color": "#EF4444",
+      "logo": "/logos/dexari.jpg"
+    },
+    "0x6530512a6c89c7cfcebc3ba7fcd9ada5f30827a6": {
+      "name": "PVP Trade",
+      "color": "#14B8A6",
+      "logo": "/logos/pvp.jpg"
+    },
+    "0x999a4b5f268a8fbf33736feff360d462ad248dbf": {
+      "name": "Dreamcash",
+      "color": "#2293f1",
+      "logo": "/logos/dreamcash.jpg"
+    },
+    "0xf944069b489f1ebff4c3c6a6014d58cbef7c7009": {
+      "name": "Mass",
+      "color": "#e9ff41",
+      "logo": "/logos/mass.jpg"
+    },
+    "0x05984fd37db96dc2a11a09519a8def556e80590b": {
+      "name": "Okto",
+      "color": "#4386c6",
+      "logo": "/logos/okto.jpg"
+    },
+    "0xTODO_REPLACE_LIQUID_BUILDER_ADDRESS_HERE3": {
+      "name": "Liquid",
+      "color": "#00D4FF",
+      "logo": "/logos/liquid.jpg"
+    },
+    "0xTODO_REPLACE_TREAD_BUILDER_ADDRESS_HERE04": {
+      "name": "Tread",
+      "color": "#22C55E",
+      "logo": "/logos/tread.jpg"
+    },
+    "0xTODO_REPLACE_BULLPEN_ADDRESS_HERE0000005": {
+      "name": "Bullpen",
+      "color": "#DC2626",
+      "logo": "/logos/bullpen.jpg"
+    },
+    "0xTODO_REPLACE_DEXTRABOT_ADDRESS_HERE0006": {
+      "name": "Dextrabot",
+      "color": "#0EA5E9",
+      "logo": "/logos/dextrabot.jpg"
+    },
+    "0xTODO_REPLACE_KINTO_ADDRESS_HERE00000007": {
+      "name": "Kinto",
+      "color": "#7C3AED",
+      "logo": "/logos/kinto.jpg"
+    },
+    "0xTODO_REPLACE_RABBY_ADDRESS_HERE00000008": {
+      "name": "Rabby",
+      "color": "#8B5CF6",
+      "logo": "/logos/rabby.png"
+    },
+    "0x60dc8e3dad2e4e0738e813b9cb09b9c00b5e0fc9": {
+      "name": "Rainbow",
+      "color": "#43bdd5",
+      "logo": "/logos/rainbow.png"
+    }
+  },
+  "other": {
+    "name": "Other",
+    "color": "#4B5563",
+    "logo": ""
+  }
+}
